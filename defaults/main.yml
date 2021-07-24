@@ -5,3 +5,4 @@ lmod_version: 8.5
 lmod_download_folder: /data/software/download
 lmod_prefix: /data/software/apps
 lmod_module_path: /data/software/apps/modulefiles
+#
