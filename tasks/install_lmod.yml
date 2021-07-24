@@ -15,6 +15,7 @@
     - "{{ lmod_download_folder }}"
     - "{{ lmod_prefix }}"
     - "{{ lmod_module_path }}"
+    - "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}"
 
 
 - name: Download lmod tar
