@@ -9,7 +9,7 @@
 - include_tasks: install_lmod.yml
   when: install_lmod
 
-
+# this fails with nfs install cause of root_squash
 - name: Link files to /etc/profile.d
   ansible.builtin.file:
     src: "{{ lmod_prefix }}/lmod/lmod/init/{{ item.src }}"
