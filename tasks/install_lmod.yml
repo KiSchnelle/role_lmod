@@ -1,0 +1,56 @@
+---
+- name: Install gcc
+  ansible.builtin.package:
+    name: gcc
+    state: present
+    update_cache: true
+
+
+- name: Make sure folders exist.
+  ansible.builtin.file:
+    path: "{{ item }}"
+    mode: 0755
+    state: directory
+  with_items:
+    - lmod_download_folder
+    - lmod_prefix
+    - lmod_module_path
+
+
+- name: Download lmod tar
+  ansible.builtin.get_url:
+    url: "https://sourceforge.net/projects/lmod/files/Lmod-{{ lmod_version }}.tar.bz2"
+    dest: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}.tar.bz2"
+
+
+- name: Extract lmod.
+  ansible.builtin.unarchive:
+    src: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}.tar.bz2"
+    dest: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}"
+
+
+- name: Configure and install lmod.
+  ansible.builtin.shell:
+    cmd: "./configure --prefix={{ lmod_prefix }} --with-module-root-path={{ lmod_module_path }} --with-lua={{ lua }} --with-luac={{ luac }} && make install"
+    chdir: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}"
+
+
+- name: Create lmod etc folder.
+  ansible.builtin.file:
+    path: "{{ lmod_prefix }}/lmod/etc"
+    state: directory
+    mode: 0755
+
+
+# admin.list
+
+
+- name: Setup module file folders.
+  ansible.builtin.file:
+    path: "lmod_module_path/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - "Core"
+    - "Compiler"
+    - "MPI"

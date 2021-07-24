@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include role_lmod"
+      include_role:
+        name: "role_lmod"

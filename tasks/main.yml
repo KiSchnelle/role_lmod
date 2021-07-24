@@ -1,0 +1,10 @@
+---
+- name: Include OS-specific variables.
+  include_vars: "{{ ansible_os_family }}.yml"
+
+
+- include_tasks: install_deps.yml
+
+
+- include_tasks: install_lmod.yml
+  when: install_lmod

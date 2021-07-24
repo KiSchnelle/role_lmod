@@ -1,0 +1,14 @@
+- name: Install dependencies.
+  ansible.builtin.package:
+    name: "{{ item }}"
+    state: present
+    update_cache: true
+  with_items: "{{ deps }}"
+
+
+- name: Fix lua-posix linking on Ubuntu.
+  ansible.builtin.file:
+    src: /usr/lib/x86_64-linux-gnu/liblua5.3-posix.so
+    dest: /usr/lib/x86_64-linux-gnu/lua/5.3/posix.so
+    state: link
+  when: ansible_distribution_release == "bionic" or ansible_distribution_release == "focal"

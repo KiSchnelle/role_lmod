@@ -1,0 +1,14 @@
+---
+deps:
+  - lua
+  - lua-bitop
+  - lua-devel
+  - lua-json
+  - lua-lpeg
+  - lua-posix
+  - lua-term
+  - tcl
+  - tcl-devel
+
+lua: /usr/bin/lua
+luac: /usr/bin/luac
