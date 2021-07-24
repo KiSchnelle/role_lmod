@@ -12,12 +12,14 @@
 
 - name: Link files to /etc/profile.d
   ansible.builtin.file:
-    src: "{{ lmod_prefix }}/lmod/init/{{ item.src }}"
+    src: "{{ lmod_prefix }}/lmod/lmod/init/{{ item.src }}"
     dest: "/etc/profile.d/{{ item.dest }}"
     state: link
     mode: 0644
     owner: root
     group: root
+  with_items:
+    - {src: profile, dest: z00_lmod.sh}
 
 
 - name: Adept /etc/bash.bashrc
