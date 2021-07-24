@@ -12,9 +12,9 @@
     mode: 0755
     state: directory
   with_items:
-    - lmod_download_folder
-    - lmod_prefix
-    - lmod_module_path
+    - "{{ lmod_download_folder }}"
+    - "{{ lmod_prefix }}"
+    - "{{ lmod_module_path }}"
 
 
 - name: Download lmod tar
