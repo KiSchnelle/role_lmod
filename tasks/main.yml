@@ -8,3 +8,35 @@
 
 - include_tasks: install_lmod.yml
   when: install_lmod
+
+
+- name: Link files to /etc/profile.d
+  ansible.builtin.file:
+    src: "{{ lmod_prefix }}/lmod/init/{{ item.src }}"
+    dest: "/etc/profile.d/{{ item.dest }}"
+    state: link
+    mode: 0644
+    owner: root
+    group: root
+
+
+- name: Adept /etc/bash.bashrc
+  ansible.builtin.blockinfile:
+    path: /etc/bash.bashrc
+    state: present
+    block: |
+      if ! shopt -q login_shell; then
+        if [ -d /etc/profile.d ]; then
+          for i in /etc/profile.d/*.sh; do
+            if [ -r $i ]; then
+              . $i
+            fi
+          done
+        fi
+      fi
+  when: ansible_os_family == Debian
+
+# for redhat all users should have this in their bashrc
+# if [ -f /etc/bashrc ]; then
+#    . /etc/bashrc
+# fi
