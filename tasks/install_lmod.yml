@@ -47,7 +47,7 @@
 
 - name: Setup module file folders.
   ansible.builtin.file:
-    path: "{{ lmod_module_path}} /{{ item }}"
+    path: "{{ lmod_module_path }}/{{ item }}"
     state: directory
     mode: 0755
   with_items:
