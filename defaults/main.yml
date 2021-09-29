@@ -1,8 +1,8 @@
 ---
 # defaults file for role_lmod
-# install_lmod: true
+install_lmod: false
 lmod_version: 8.5
-lmod_download_folder: /data/software/download
-lmod_prefix: /data/software/apps
-lmod_module_path: /data/software/apps/modulefiles
+lmod_download_folder: /sbdata/software/download
+lmod_prefix: /sbdata/software/apps
+lmod_module_path: /sbdata/software/apps/modulefiles
 #

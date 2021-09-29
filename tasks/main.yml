@@ -36,7 +36,7 @@
           done
         fi
       fi
-  when: ansible_os_family == Debian
+  when: ansible_os_family == 'Debian'
 
 # for redhat all users should have this in their bashrc
 # if [ -f /etc/bashrc ]; then
