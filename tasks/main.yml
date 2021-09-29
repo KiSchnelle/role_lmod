@@ -18,6 +18,7 @@
     mode: 0644
     owner: root
     group: root
+    follow: no
   with_items:
     - {src: profile, dest: z00_lmod.sh}
 
