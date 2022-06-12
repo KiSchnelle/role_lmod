@@ -4,7 +4,7 @@
     state: present
     update_cache: true
   with_items: "{{ deps }}"
-
+  retries: 3
 
 - name: Fix lua-posix linking on Ubuntu.
   ansible.builtin.file:

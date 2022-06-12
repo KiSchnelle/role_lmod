@@ -2,9 +2,7 @@
 - name: Include OS-specific variables.
   include_vars: "{{ ansible_os_family }}.yml"
 
-
 - include_tasks: install_deps.yml
-
 
 - include_tasks: install_lmod.yml
   when: install_lmod
@@ -20,8 +18,7 @@
     group: root
     follow: no
   with_items:
-    - {src: profile, dest: z00_lmod.sh}
-
+    - { src: profile, dest: z00_lmod.sh }
 
 - name: Adept /etc/bash.bashrc
   ansible.builtin.blockinfile:
@@ -38,7 +35,6 @@
         fi
       fi
   when: ansible_os_family == 'Debian'
-
 # for redhat all users should have this in their bashrc
 # if [ -f /etc/bashrc ]; then
 #    . /etc/bashrc

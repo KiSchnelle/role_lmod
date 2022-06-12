@@ -4,7 +4,7 @@
     name: gcc
     state: present
     update_cache: true
-
+  retries: 3
 
 - name: Make sure folders exist.
   ansible.builtin.file:
@@ -16,24 +16,25 @@
     - "{{ lmod_prefix }}"
     - "{{ lmod_module_path }}"
 
-
 - name: Download lmod tar
   ansible.builtin.get_url:
     url: "https://sourceforge.net/projects/lmod/files/Lmod-{{ lmod_version }}.tar.bz2"
     dest: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}.tar.bz2"
-
 
 - name: Extract lmod.
   ansible.builtin.unarchive:
     src: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}.tar.bz2"
     dest: "{{ lmod_download_folder }}"
 
-
+# Sites can also use /apps/lmod/lmod/init/.modulespath or configure Lmod to use –withModulePathInit=. . . ‘ to point to any file. The format of this file is:
+# # comments are allowed as well as wildcards
+# /apps/modulefiles/\*
+# /apps/other_modulefiles
+# If this file exists then MODULEPATH_ROOT method is not used.
 - name: Configure and install lmod.
   ansible.builtin.shell:
     cmd: "./configure --prefix={{ lmod_prefix }} --with-module-root-path={{ lmod_module_path }} --with-lua={{ lua }} --with-luac={{ luac }} && make install"
     chdir: "{{ lmod_download_folder }}/Lmod-{{ lmod_version }}"
-
 
 - name: Create lmod etc folder.
   ansible.builtin.file:
@@ -41,9 +42,7 @@
     state: directory
     mode: 0755
 
-
 # admin.list
-
 
 - name: Setup module file folders.
   ansible.builtin.file:
